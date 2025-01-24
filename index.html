@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chatbot - Nikki</title>
+    <style>
+        body { font-family: Lato, sans-serif; margin: 20px; }
+        .chat-container { max-width: 600px; margin: 0 auto; }
+        .message { margin: 10px 0; }
+        .user { color: yellow; }
+        .nikki { color: grey; }
+        input[type="text"] { width: 80%; padding: 10px; }
+        button { padding: 10px; }
+    </style>
+</head>
+<body>
+    <div class="chat-container">
+        <h1>Chatbot - Nikki</h1>
+        <div id="chat"></div>
+        <input type="text" id="message" placeholder="Reach out to Nikki" />
+        <button onclick="sendMessage()">Send</button>
+    </div>
+
+    <script>
+        async function sendMessage() {
+            const message = document.getElementById('message').value;
+            const chat = document.getElementById('chat');
+            
+            // Display user's message
+            const userMessage = document.createElement('div');
+            userMessage.className = 'message user';
+            userMessage.textContent = `You: ${message}`;
+            chat.appendChild(userMessage);
+
+            // Send message to backend
+            const response = await fetch('https://<your-vercel-backend-url>/chat', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ message })
+            });
+
+            const data = await response.json();
+
+            // Display Nikki's reply
+            const botMessage = document.createElement('div');
+            botMessage.className = 'message nikki';
+            botMessage.textContent = `Nikki: ${data.reply}`;
+            chat.appendChild(botMessage);
+
+            document.getElementById('message').value = ''; // Clear input field
+        }
+    </script>
+</body>
+</html>
