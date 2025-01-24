@@ -34,7 +34,7 @@
             chat.appendChild(userMessage);
 
             // Send message to backend
-            const response = await fetch('https://<your-vercel-backend-url>/chat', {
+            const response = await fetch('https://chatbot-backend-bay.vercel.app/chat', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ message })
