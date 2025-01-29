@@ -34,11 +34,16 @@
             chat.appendChild(userMessage);
 
             // Send message to backend
-            const response = await fetch('https://chatbot-backend-1wfr.onrender.com/chat', {
+           const response = await fetch('https://chatbot-backend.onrender.com/chat', {
                 method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
+                headers: { 
+                'Content-Type': 'application/json',
+                'Access-Control-Allow-Origin': '*'  // ✅ Explicitly allow cross-origin requests
+                        },
                 body: JSON.stringify({ message })
             });
+            
+                        });
 
             const data = await response.json();
 
